@@ -1,7 +1,5 @@
-Swiss Ephemeris binding for node.js [![Build Status](https://travis-ci.org/mivion/swisseph.svg?branch=master)](https://travis-ci.org/mivion/swisseph)
+Swiss Ephemeris binding for node.js 
 ===================================
-
-**NOTE: Need help to mantain this project. Please write me.**
 
 ## About
 
