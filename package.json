@@ -1,11 +1,11 @@
 {
-  "author": "mivion",
-  "name": "swisseph",
-  "description": "Swiss Ephemeris binding for node.js",
-  "version": "0.5.17",
-  "homepage": "http://github.com/mivion/swisseph",
+  "author": "drvinaayaks",
+  "name": "swisseph-v2",
+  "description": "Updated for latest node version Swiss Ephemeris binding for node.js",
+  "version": "1.0.2",
+  "homepage": "https://shilaavinyaas.com/",
   "repository": {
-    "url": "http://github.com/mivion/swisseph.git"
+    "url": "https://github.com/drvinaayaksingh/swisseph.git"
   },
   "main": "./lib/swisseph.js",
   "types": "./lib/swisseph.d.ts",
@@ -17,13 +17,13 @@
   ],
   "dependencies": {
     "merge": "^2.1.1",
-    "nan": "^2.15.0",
-    "node-gyp": "^8.4.1"
+    "nan": "^2.19.0",
+    "node-gyp": "^10.0.1"
   },
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
-    "node": ">=8"
+    "node": ">=16"
   },
   "scripts": {
     "install": "node-gyp rebuild",

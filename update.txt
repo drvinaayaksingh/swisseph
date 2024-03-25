@@ -1,0 +1,7 @@
+remember to build, 
+use python 3.10 & VS 2019 community with c++
+
+to publish
+npm run install
+npm login
+npm publish

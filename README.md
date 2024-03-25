@@ -1,11 +1,17 @@
-Swiss Ephemeris binding for node.js 
+swisseph - Swiss Ephemeris for Node.js (Updated Version)
 ===================================
 
-## About
+## Overview
 
-Swiss Ephemeris binding for node.js.
+This project is an updated version of the swisseph library, originally designed to provide Swiss Ephemeris calculations for Node.js applications. The Swiss Ephemeris is a highly precise ephemeris developed by Astrodienst AG, used for astrological calculations.
+
+The original swisseph project made the power of the Swiss Ephemeris accessible to Node.js developers but was not maintained for compatibility with the latest versions of Node.js. This fork aims to update the library, ensuring it works seamlessly with the most recent Node.js and npm versions, thereby extending its utility to the current development environment.
+
+This work builds upon the original swisseph project. The original project can be found at [\https://www.npmjs.com/package/swisseph\]. I am deeply grateful to author for their pioneering work on making the Swiss Ephemeris accessible to the Node.js community. This updated version stands as a testament to the foundational work laid by the original author(s).
 
 See [Swiss Ephemeris](http://www.astro.com/swisseph/swephinfo_e.htm) for more details.
+
+Visit our website: [shilaavinyaas](https://shilaavinyaas.com/) which uses this library for calculations.
 
 Supported platforms: **Mac OS X** | **Windows** | **Linux** | **FreeBSD**
 
@@ -14,30 +20,74 @@ Supported platforms: **Mac OS X** | **Windows** | **Linux** | **FreeBSD**
 To install run:
 
 ```
-$ npm install swisseph
+$ npm install swisseph-v2
 ```
 
 ## Requirements
 
-From version 0.5.x only nodejs 0.12 or newer supported.
+Compatibility with the latest Node.js versions.
+All original swisseph functionality preserved and made accessible for modern Node.js environments.
 
-To use with older nodejs version use swisseph 0.4.x or older.
-
-## Version 0.5.x Notes
-
-From version 0.5.x only nodejs 0.12 supported, because of C addons API compatibility.
-
-Also, project splited to [swisseph](https://github.com/mivion/swisseph) and [swisseph-api](https://github.com/mivion/swisseph-api).
-
-[swisseph](https://github.com/mivion/swisseph) responsible only for nodejs binding, but [swisseph-api](https://github.com/mivion/swisseph-api)
-to access over the web.
 
 ## Usage
 
 ### Getting julian day
 
+```typescript
+
+import  * as Swisseph from 'swisseph-v2';
+
+export default class vBase {
+
+	static setHouseMethod(hsys:string) {
+        this.houseMethod = hsys;
+    }
+
+    static setEphemeridesPath(path: string | null = null) {
+        if (path) {
+            Swisseph.swe_set_ephe_path(path);
+        }
+    }
+
+	 static getPlanet(date: Date, planet: number):any {
+        const julianDate = this.toJulianUTCDate(date);
+        const flags = Swisseph.SEFLG_SPEED;
+        const planetData = Swisseph.swe_calc_ut(julianDate, planet, flags);
+        return planetData;
+    }
+
+
+    static toJulianUTCDate(date: Date) {
+        const julianDay = Swisseph.swe_utc_to_jd(
+             date.getUTCFullYear(), 
+             date.getUTCMonth() + 1, 
+             date.getUTCDate(), 
+             date.getUTCHours(), 
+             date.getUTCMinutes(), 
+             0,
+             Swisseph.SE_GREG_CAL
+         );
+
+         let jdUT : any;
+         if ('julianDayUT' in julianDay) {
+            jdUT =julianDay.julianDayUT;
+         }else if ('error' in julianDay) {
+             // Handle the error case
+             jdUT = julianDay.error;
+         }
+         return jdUT;
+     }
+
+	     static toGregorianUTCDate(julianDate:number):any {
+        return Swisseph.swe_jdut1_to_utc(julianDate, Swisseph.SE_GREG_CAL);
+    }
+
+}
+
+```
+
 ```javascript
-var swisseph = require ('swisseph');
+var swisseph = require ('swisseph-v2');
 
 var date = {year: 2015, month: 1, day: 1, hour: 0};
 
@@ -50,7 +100,7 @@ var julday = swisseph.swe_julday (date.year, date.month, date.day, date.hour, sw
 Example:
 
 ```javascript
-var swisseph = require ('swisseph');
+var swisseph = require ('swisseph-v2');
 
 // Test date
 var date = {year: 2012, month: 1, day: 1, hour: 0};
@@ -130,7 +180,7 @@ For more details see src/*.h.
 
 ## Feedback
 
-Please feel free to fill [issues](http://github.com/mivion/swisseph/issues) for bugs, erros and features.
+Please feel free to fill [issues](http://github.com/drvinaayaksingh/swisseph/issues) for bugs, erros and features.
 
 ## License
 

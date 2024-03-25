@@ -6,7 +6,7 @@ var version = swisseph.swe_version ();
 console.log ('Swiss Ephemeris version:', version);
 
 // Test date
-var date = {year: 2012, month: 1, day: 1, hour: 0};
+var date = {year: 1983, month: 5, day: 31, hour: 7};
 console.log ('Test date:', date);
 
 var flag = swisseph.SEFLG_SPEED | swisseph.SEFLG_MOSEPH;
