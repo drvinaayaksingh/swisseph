@@ -1,8 +1,13 @@
 {
   "author": "drvinaayaks",
   "name": "swisseph-v2",
-  "description": "Updated for latest node version Swiss Ephemeris binding for node.js",
-  "version": "1.0.2",
+  "description": "Enhanced Swiss Ephemeris Bindings for Modern Node.js: Leveraging the latest Node.js features for precise astronomical calculations",
+  "version": "1.0.3",
+  "keywords": [
+    "swisseph","swisseph-v2",
+    "swisseph v2", "swisseph node",
+	"astrology","ephemeris"	
+	],
   "homepage": "https://shilaavinyaas.com/",
   "repository": {
     "url": "https://github.com/drvinaayaksingh/swisseph.git"
