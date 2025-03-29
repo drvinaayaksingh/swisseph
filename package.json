@@ -2,7 +2,7 @@
   "author": "drvinaayaks",
   "name": "swisseph-v2",
   "description": "Enhanced Swiss Ephemeris Bindings for Modern Node.js: Leveraging the latest Node.js features for precise astronomical calculations",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "swisseph","swisseph-v2",
     "swisseph v2", "swisseph node",

@@ -1,4 +1,4 @@
-swisseph - Swiss Ephemeris for Node.js (Updated Version)
+swisseph-v2 - Swiss Ephemeris for Node.js (Updated Version)
 ===================================
 
 ## Overview
@@ -7,7 +7,7 @@ This project is an updated version of the swisseph library, originally designed 
 
 The original swisseph project made the power of the Swiss Ephemeris accessible to Node.js developers but was not maintained for compatibility with the latest versions of Node.js. This fork aims to update the library, ensuring it works seamlessly with the most recent Node.js and npm versions, thereby extending its utility to the current development environment.
 
-This work builds upon the original swisseph project. The original project can be found at [\https://www.npmjs.com/package/swisseph\]. I am deeply grateful to author for their pioneering work on making the Swiss Ephemeris accessible to the Node.js community. This updated version stands as a testament to the foundational work laid by the original author(s).
+This work builds upon the original swisseph project. I am deeply grateful to author for their pioneering work on making the Swiss Ephemeris accessible to the Node.js community. This updated version stands as a testament to the foundational work laid by the original author(s).
 
 See [Swiss Ephemeris](http://www.astro.com/swisseph/swephinfo_e.htm) for more details.
 
