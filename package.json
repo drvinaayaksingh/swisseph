@@ -10,8 +10,12 @@
 	],
   "homepage": "https://shilaavinyaas.com/",
   "repository": {
+	"type": "git",
     "url": "https://github.com/drvinaayaksingh/swisseph.git"
   },
+  "publishConfig": {
+  "registry": "https://npm.pkg.github.com"
+},
   "main": "./lib/swisseph.js",
   "types": "./lib/swisseph.d.ts",
   "keywords": [
