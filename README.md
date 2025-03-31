@@ -1,4 +1,41 @@
-swisseph-v2 - Swiss Ephemeris for Node.js (Updated Version)
+# 🪐 Node.js Wrapper for Swiss Ephemeris (Swisseph)
+
+## 🪐 About This Project
+
+This project is a **Node.js wrapper for Swiss Ephemeris (Swisseph)** – a high-precision astronomical and astrological calculation engine developed by [Astrodienst](https://www.astro.com). Powered by NASA’s JPL DE data, Swiss Ephemeris delivers extremely accurate planetary positions, house systems, nakshatras, tithis, yoga, eclipses, and other essential components for astrology and astronomy applications.
+
+---
+
+## ✨ Why This Exists
+
+The original Swisseph library is written in C and not easily accessible from JavaScript or Node.js-based environments. This lightweight and efficient Node wrapper bridges that gap, allowing **JavaScript developers, astrologers, and researchers** to integrate Swiss Ephemeris directly into **web apps, APIs, and astrology tools**.
+
+---
+
+## 🔧 Features
+
+- 🔭 Accurate planetary position calculations  
+- ♈ Support for sidereal and tropical zodiacs  
+- 🌙 Nakshatra, Tithi, Yoga, Karana, Sunrise/Sunset, and Ayanamsa  
+- 🕒 Timezone, UTC, Julian Day conversions  
+- ⚙️ Easy-to-use Promise/Async API for Node.js  
+- 🧱 Works with modern frameworks like Express, NestJS, etc.
+
+---
+
+## 📦 Ideal For
+
+- 🧘 Vedic Astrology APIs  
+- 📅 Panchang generators  
+- 🔔 Muhurat finders  
+- 🧑‍💻 Horoscope calculators  
+- 🔬 Astronomy research tools
+
+---
+
+> Want to contribute or customize it for your astrology platform? Pull requests and stars are always welcome!
+
+
 ===================================
 
 ## Overview
