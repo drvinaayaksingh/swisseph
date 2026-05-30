@@ -1,8 +1,22 @@
 {
+  'variables': {
+    'clang': 0,
+  },
   'targets': [
     {
       'target_name': 'swissephz',
       'type': 'static_library',
+      'variables': {
+        'clang': 0,
+      },
+      'configurations': {
+        'Debug': {
+          'msbuild_toolset': 'v143',
+        },
+        'Release': {
+          'msbuild_toolset': 'v143',
+        },
+      },
       'direct_dependent_settings': {
         'include_dirs': ['.']
       },

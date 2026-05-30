@@ -56,113 +56,138 @@ Supported platforms: **Mac OS X** | **Windows** | **Linux** | **FreeBSD**
 
 To install run:
 
-```
+```bash
 $ npm install swisseph-v2
 ```
 
-## Requirements
+## Requirements & Compatibility
 
-Compatibility with the latest Node.js versions.
-All original swisseph functionality preserved and made accessible for modern Node.js environments.
+- **Node.js**: Requires `node >= 16.0.0` (fully tested, updated, and compatible up to **Node.js v24**).
+- **Windows Builds**: Automatically configures and compiles native addons using standard Visual Studio MSVC compilers (e.g. Visual Studio 2022 / `v143` toolset). No complex global or manual `ClangCL` configuration is required.
+- **macOS / Linux / FreeBSD**: Standard developer tools (`clang` / `gcc`) are supported.
+- All original Swiss Ephemeris functionality is preserved and fully accessible in modern Node.js environments.
 
 
 ## Usage
 
-### Getting julian day
+The library supports both standard **JavaScript (CommonJS)** and **TypeScript / ES6 Modules**.
 
-```typescript
-
-import  * as Swisseph from 'swisseph-v2';
-
-export default class vBase {
-
-	static setHouseMethod(hsys:string) {
-        this.houseMethod = hsys;
-    }
-
-    static setEphemeridesPath(path: string | null = null) {
-        if (path) {
-            Swisseph.swe_set_ephe_path(path);
-        }
-    }
-
-	 static getPlanet(date: Date, planet: number):any {
-        const julianDate = this.toJulianUTCDate(date);
-        const flags = Swisseph.SEFLG_SPEED;
-        const planetData = Swisseph.swe_calc_ut(julianDate, planet, flags);
-        return planetData;
-    }
-
-
-    static toJulianUTCDate(date: Date) {
-        const julianDay = Swisseph.swe_utc_to_jd(
-             date.getUTCFullYear(), 
-             date.getUTCMonth() + 1, 
-             date.getUTCDate(), 
-             date.getUTCHours(), 
-             date.getUTCMinutes(), 
-             0,
-             Swisseph.SE_GREG_CAL
-         );
-
-         let jdUT : any;
-         if ('julianDayUT' in julianDay) {
-            jdUT =julianDay.julianDayUT;
-         }else if ('error' in julianDay) {
-             // Handle the error case
-             jdUT = julianDay.error;
-         }
-         return jdUT;
-     }
-
-	     static toGregorianUTCDate(julianDate:number):any {
-        return Swisseph.swe_jdut1_to_utc(julianDate, Swisseph.SE_GREG_CAL);
-    }
-
-}
-
-```
+### 1. JavaScript (CommonJS)
 
 ```javascript
-var swisseph = require ('swisseph-v2');
+const swisseph = require('swisseph-v2');
 
-var date = {year: 2015, month: 1, day: 1, hour: 0};
+// Configure ephemeris data path
+swisseph.swe_set_ephe_path(__dirname + '/ephe');
 
-var julday = swisseph.swe_julday (date.year, date.month, date.day, date.hour, swisseph.SE_GREG_CAL);
+// Calculate Julian Day for a UT date (e.g. 1983-05-31 07:00:00 UT)
+const date = { year: 1983, month: 5, day: 31, hour: 7 };
+const julday = swisseph.swe_julday(date.year, date.month, date.day, date.hour, swisseph.SE_GREG_CAL);
+console.log('Julian UT day:', julday); // 2445485.7916666665
 
+// Calculate Sun position
+const flags = swisseph.SEFLG_SPEED | swisseph.SEFLG_MOSEPH;
+swisseph.swe_calc_ut(julday, swisseph.SE_SUN, flags, function (body) {
+	if (body.error) {
+		console.error('Error:', body.error);
+	} else {
+		console.log('Sun position:', body);
+	}
+});
+```
+
+### 2. TypeScript / ES6 Modules
+
+When using TypeScript, make sure you have `"esModuleInterop": true` enabled in your `tsconfig.json` compiler options. This allows standard default imports:
+
+```typescript
+import swisseph from 'swisseph-v2';
+
+// Calculate Julian day and get Sun position
+const date = { year: 1983, month: 5, day: 31, hour: 7 };
+const julday = swisseph.swe_julday(date.year, date.month, date.day, date.hour, swisseph.SE_GREG_CAL);
+
+const flags = swisseph.SEFLG_SPEED | swisseph.SEFLG_MOSEPH;
+swisseph.swe_calc_ut(julday, swisseph.SE_SUN, flags, (body) => {
+    if ('error' in body) {
+        console.error('Error:', body.error);
+    } else if ('longitude' in body) {
+        // TypeScript type narrowing guarantees body has planetary coordinates
+        console.log('Sun Longitude:', body.longitude);
+        console.log('Sun Latitude:', body.latitude);
+    }
+});
 ```
 
 ### Getting Sun and Moon position
 
-Example:
+Here are examples showing how to calculate the Julian Day, Sun, and Moon positions.
+
+#### JavaScript (CommonJS)
 
 ```javascript
-var swisseph = require ('swisseph-v2');
+const assert = require('assert');
+const swisseph = require('swisseph-v2');
 
 // Test date
-var date = {year: 2012, month: 1, day: 1, hour: 0};
-console.log ('Test date:', date);
+const date = { year: 1983, month: 5, day: 31, hour: 7 };
+const flag = swisseph.SEFLG_SPEED | swisseph.SEFLG_MOSEPH;
 
-var flag = swisseph.SEFLG_SPEED;
+// Path to ephemeris data
+swisseph.swe_set_ephe_path(__dirname + '/../ephe');
 
-// path to ephemeris data
-swisseph.swe_set_ephe_path (__dirname + '/../ephe');
+// Calculate Julian day
+swisseph.swe_julday(date.year, date.month, date.day, date.hour, swisseph.SE_GREG_CAL, function (julday_ut) {
+	assert.equal(julday_ut, 2445485.7916666665);
+	console.log('Julian UT day for date:', julday_ut);
 
-// Julian day
-swisseph.swe_julday (date.year, date.month, date.day, date.hour, swisseph.SE_GREG_CAL, function (julday_ut) {
-	assert.equal (julday_ut, 2455927.5);
-	console.log ('Julian UT day for date:', julday_ut);
-
-	// Sun position
-	swisseph.swe_calc_ut (julday_ut, swisseph.SE_SUN, flag, function (body) {
-		assert (!body.error, body.error);
-		console.log ('Sun position:', body);
+	// Get Sun position
+	swisseph.swe_calc_ut(julday_ut, swisseph.SE_SUN, flag, function (body) {
+		assert(!body.error, body.error);
+		console.log('Sun position:', body);
 	});
 
-	// Moon position
-	swisseph.swe_calc_ut (julday_ut, swisseph.SE_MOON, flag, function (body) {
-		assert (!body.error, body.error);
-		console.log ('Moon position:', body);
+	// Get Moon position
+	swisseph.swe_calc_ut(julday_ut, swisseph.SE_MOON, flag, function (body) {
+		assert(!body.error, body.error);
+		console.log('Moon position:', body);
+	});
+});
+```
+
+#### TypeScript / ES6 Modules
+
+```typescript
+import assert from 'assert';
+import swisseph from 'swisseph-v2';
+
+const date = { year: 1983, month: 5, day: 31, hour: 7 };
+const flag = swisseph.SEFLG_SPEED | swisseph.SEFLG_MOSEPH;
+
+// Path to ephemeris data
+swisseph.swe_set_ephe_path(__dirname + '/../ephe');
+
+// Calculate Julian day
+swisseph.swe_julday(date.year, date.month, date.day, date.hour, swisseph.SE_GREG_CAL, (julday_ut) => {
+	assert.equal(julday_ut, 2445485.7916666665);
+	console.log('Julian UT day:', julday_ut);
+
+	// Get Sun position
+	swisseph.swe_calc_ut(julday_ut, swisseph.SE_SUN, flag, (body) => {
+		if ('error' in body) {
+			assert.fail(body.error);
+		} else if ('longitude' in body) {
+			console.log('Sun position:', body);
+		}
+	});
+
+	// Get Moon position
+	swisseph.swe_calc_ut(julday_ut, swisseph.SE_MOON, flag, (body) => {
+		if ('error' in body) {
+			assert.fail(body.error);
+		} else if ('longitude' in body) {
+			console.log('Moon position:', body);
+		}
 	});
 });
 ```

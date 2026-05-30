@@ -2,41 +2,40 @@
   "author": "drvinaayaks",
   "name": "swisseph-v2",
   "description": "Enhanced Swiss Ephemeris Bindings for Modern Node.js: Leveraging the latest Node.js features for precise astronomical calculations",
-  "version": "1.0.4",
-  "keywords": [
-    "swisseph","swisseph-v2",
-    "swisseph v2", "swisseph node",
-	"astrology","ephemeris"	
-	],
-  "homepage": "https://shilaavinyaas.com/",
-  "repository": {
-	"type": "git",
-    "url": "https://github.com/drvinaayaksingh/swisseph.git"
-  },
-  "publishConfig": {
-  "registry": "https://npm.pkg.github.com"
-},
-  "main": "./lib/swisseph.js",
-  "types": "./lib/swisseph.d.ts",
+  "version": "1.1.0",
   "keywords": [
     "swiss",
     "ephemeris",
     "astrology",
     "astronomy"
   ],
+  "homepage": "https://shilaavinyaas.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drvinaayaksingh/swisseph.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "main": "./lib/swisseph.js",
+  "types": "./lib/swisseph.d.ts",
   "dependencies": {
     "merge": "^2.1.1",
-    "nan": "^2.19.0",
+    "nan": "^2.27.0",
     "node-gyp": "^10.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": ">=16"
   },
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "node test/test.js",
+    "test": "node test/test.js && ts-node test/test.ts",
     "start": "node app.js"
   }
 }
